@@ -11,7 +11,7 @@ const PRODUCTS = [
     originalPrice: 'R$ 249',
     tag: 'NOVO',
     tagColor: '#8b3dff',
-    img: '/imagens/foto_moça_camiseta.png',
+    img: 'imagens/foto_moça_camiseta.png',
     sizes: ['P', 'M', 'G', 'GG'],
     category: 'tops',
     desc: 'Camiseta oversized em algodão premium 320g. Corte amplo e caído, gola careca reforçada.',
