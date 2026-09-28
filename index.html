@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOEMIA — Streetwear que vive depois da meia-noite</title>
+  <meta name="description" content="BOEMIA — streetwear urbano noturno. Novidades, feminino, masculino e sale." />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Estilos próprios -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar navbar-expand-lg fixed-top boe-navbar">
+    <div class="container-xl px-3">
+      <a class="navbar-brand boe-logo" href="#">BOE<span>MIA</span></a>
+
+      <div class="d-flex align-items-center gap-3 order-lg-3">
+        <button class="boe-icon-btn" id="btnSearch" aria-label="Buscar" data-bs-toggle="tooltip" title="Buscar">
+          <i class="bi bi-search"></i>
+        </button>
+        <button class="boe-icon-btn position-relative" id="btnCart" aria-label="Ver carrinho">
+          <i class="bi bi-bag"></i>
+          <span id="cartBadge" class="boe-cart-badge d-none">0</span>
+        </button>
+        <button class="navbar-toggler border-0 p-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-label="Abrir menu">
+          <i class="bi bi-list boe-hamburger"></i>
+        </button>
+      </div>
+
+      <!-- Nav desktop -->
+      <div class="collapse navbar-collapse d-none d-lg-flex order-lg-2">
+        <ul class="navbar-nav mx-auto gap-lg-5">
+          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">NOVIDADES</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">FEMININO</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">MASCULINO</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link boe-nav-sale" href="#produtos" data-filter-link="todos">SALE</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ OFFCANVAS (menu mobile) ============ -->
+  <div class="offcanvas offcanvas-end boe-offcanvas" tabindex="-1" id="mobileMenu">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column align-items-center justify-content-center text-center gap-4">
+      <div class="boe-logo mb-2">BOE<span>MIA</span></div>
+      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">NOVIDADES</a>
+      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">FEMININO</a>
+      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">MASCULINO</a>
+      <a class="boe-mobile-link boe-nav-sale" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">SALE</a>
+      <a class="boe-mobile-link" href="#" data-bs-dismiss="offcanvas">SOBRE NÓS</a>
+      <a class="boe-mobile-link" href="#" data-bs-dismiss="offcanvas">CONTATO</a>
+      <div class="boe-mobile-handle mt-3">@boemia.store</div>
+    </div>
+  </div>
+
+  <!-- ============ HERO / CAROUSEL ============ -->
+  <header id="heroCarousel" class="carousel slide carousel-fade boe-hero" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators boe-hero-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/imagens/grupodeamigosfirefly.png" alt="Nova coleção Boemia" class="boe-hero-img boe-hero-img-primeira">
+        <div class="boe-hero-overlay"></div>
+        <div class="carousel-caption boe-hero-caption">
+          <span class="boe-tag boe-tag-outline">NOVA COLEÇÃO</span>
+          <h1 class="boe-hero-title">A NOITE<br>VIRA DIA</h1>
+          <p class="boe-hero-sub">Streetwear que vive depois da meia-noite.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#produtos" class="btn boe-btn-primary">COMPRAR AGORA</a>
+            <a href="#categorias" class="btn boe-btn-outline">VER COLEÇÃO</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1695349092661-6e53e5182140?w=1600&h=900&fit=crop&auto=format" alt="Drop exclusivo Boemia" class="boe-hero-img">
+        <div class="boe-hero-overlay"></div>
+        <div class="carousel-caption boe-hero-caption">
+          <span class="boe-tag boe-tag-outline">DROP EXCLUSIVO</span>
+          <h1 class="boe-hero-title">MIDNIGHT<br>STYLE</h1>
+          <p class="boe-hero-sub">Edição limitada. Só até esgotar.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#produtos" class="btn boe-btn-primary">COMPRAR AGORA</a>
+            <a href="#categorias" class="btn boe-btn-outline">VER COLEÇÃO</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1766535570784-2581adec6a3a?w=1600&h=900&fit=crop&auto=format" alt="Nova coleção Boemia" class="boe-hero-img">
+        <div class="boe-hero-overlay"></div>
+        <div class="carousel-caption boe-hero-caption">
+          <span class="boe-tag boe-tag-outline">INVERNO 2026</span>
+          <h1 class="boe-hero-title">URBAN<br>SHADOW</h1>
+          <p class="boe-hero-sub">Para quem não se limita.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#produtos" class="btn boe-btn-primary">COMPRAR AGORA</a>
+            <a href="#categorias" class="btn boe-btn-outline">VER COLEÇÃO</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="boe-scroll-cue">
+      <span>SCROLL</span>
+      <div class="boe-scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="boe-marquee">
+    <div class="boe-marquee-track">
+      <span>BOEMIA ✦ STREETWEAR ✦ DROP LIMITADO ✦ NOVIDADE ✦ URBAN ✦ STYLE ✦ BOEMIA ✦ STREETWEAR ✦ DROP LIMITADO ✦ NOVIDADE ✦ URBAN ✦ STYLE ✦</span>
+      <span aria-hidden="true">BOEMIA ✦ STREETWEAR ✦ DROP LIMITADO ✦ NOVIDADE ✦ URBAN ✦ STYLE ✦ BOEMIA ✦ STREETWEAR ✦ DROP LIMITADO ✦ NOVIDADE ✦ URBAN ✦ STYLE ✦</span>
+    </div>
+  </div>
+
+  <!-- ============ CATEGORIAS ============ -->
+  <section id="categorias" class="container-xl px-3 boe-section">
+    <div class="mb-4 mb-md-5">
+      <span class="boe-tag boe-tag-line">EXPLORAR</span>
+      <h2 class="boe-h2">CATEGORIAS</h2>
+    </div>
+    <div class="row g-3" id="categoriesGrid"></div>
+  </section>
+
+  <!-- ============ PRODUTOS ============ -->
+  <section id="produtos" class="container-xl px-3 boe-section">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+      <div>
+        <span class="boe-tag boe-tag-line">CATÁLOGO</span>
+        <h2 class="boe-h2">PRODUTOS</h2>
+      </div>
+      <div class="btn-group flex-wrap" role="group" aria-label="Filtrar produtos" id="filterGroup">
+        <button type="button" class="btn boe-filter-btn active" data-filter="todos">TODOS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="croppeds">CROPPEDS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="jaquetas">JAQUETAS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="calças">CALÇAS</button>
+      </div>
+    </div>
+    <div class="row g-3" id="productsGrid"></div>
+  </section>
+
+  <!-- ============ BANNER PROMO ============ -->
+  <section class="boe-promo">
+    <img src="https://i.pinimg.com/736x/34/25/33/342533c11a42621bf503f3dd5b0b5e28.jpg" alt="Drop especial Boemia" class="boe-promo-img">
+    <div class="boe-promo-overlay"></div>
+    <div class="boe-promo-content">
+      <span class="boe-tag boe-tag-solid">DROP ESPECIAL</span>
+      <h2 class="boe-h2">INVERNO 2026<br><span class="boe-purple-text">ATÉ 40% OFF</span></h2>
+      <p class="boe-promo-text">Peças selecionadas do inverno com desconto exclusivo. Oferta válida até o fim dos estoques.</p>
+      <a href="#produtos" class="btn boe-btn-primary boe-btn-lg" data-filter-link="todos">VER SALE</a>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="container-xl px-3 boe-section">
+    <div class="mb-4 mb-md-5 text-center">
+      <span class="boe-tag boe-tag-line">CLIENTES</span>
+      <h2 class="boe-h2">O QUE DIZEM</h2>
+    </div>
+    <div class="row g-3" id="reviewsGrid"></div>
+  </section>
+
+  <!-- ============ FAQ (ACCORDION) ============ -->
+  <section class="container px-3 boe-section" style="max-width:760px;">
+    <div class="mb-4 text-center">
+      <span class="boe-tag boe-tag-line">DÚVIDAS</span>
+      <h2 class="boe-h2 boe-h2-sm">FAQ</h2>
+    </div>
+    <div class="accordion boe-accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Qual o prazo de entrega?</button>
+        </h3>
+        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Entregas para capitais em 2–4 dias úteis, interior em 4–7 dias úteis. Frete grátis para compras acima de R$399.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Posso trocar ou devolver?</button>
+        </h3>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Sim. Você tem 30 dias para solicitar troca ou devolução. O produto deve estar com etiqueta e sem uso. Basta entrar em contato pelo nosso WhatsApp.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Os tamanhos são os padrões?</button>
+        </h3>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Nossas peças têm fit oversized, recomendamos consultar a tabela de medidas em cada produto. Em geral, um tamanho abaixo do seu habitual.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Como funciona o pagamento?</button>
+        </h3>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Aceitamos cartão de crédito em até 12x sem juros, Pix (5% de desconto) e boleto bancário.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER ============ -->
+  <section class="boe-newsletter">
+    <div class="container px-3" style="max-width:560px;">
+      <div class="text-center">
+        <span class="boe-tag boe-tag-solid-soft">EXCLUSIVO</span>
+        <h2 class="boe-h2">FIQUE POR<br><span class="boe-purple-text">DENTRO</span></h2>
+        <p class="boe-newsletter-text">Receba drops exclusivos, promoções e lançamentos antes de todo mundo. Sem spam.</p>
+
+        <form id="newsletterForm" class="d-flex boe-newsletter-form mx-auto">
+          <input type="email" id="newsletterEmail" class="form-control boe-newsletter-input" placeholder="seu@email.com" required />
+          <button type="submit" class="btn boe-btn-primary boe-newsletter-btn">ENTRAR</button>
+        </form>
+        <div id="newsletterSuccess" class="boe-newsletter-success d-none">✓ VOCÊ ESTÁ DENTRO!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="boe-footer">
+    <div class="container-xl px-3">
+      <div class="row g-4 boe-footer-top">
+        <div class="col-6 col-md-3">
+          <div class="boe-logo mb-3">BOE<span>MIA</span></div>
+          <p class="boe-footer-desc">Streetwear para quem vive a noite e não pede desculpa por isso.</p>
+          <div class="d-flex gap-2 mt-3">
+            <button class="boe-social-btn" data-social="IG" aria-label="Instagram">IG</button>
+            <button class="boe-social-btn" data-social="TT" aria-label="TikTok">TT</button>
+            <button class="boe-social-btn" data-social="YT" aria-label="YouTube">YT</button>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <h4 class="boe-footer-title">LOJA</h4>
+          <ul class="boe-footer-list">
+            <li><a href="#">Novidades</a></li>
+            <li><a href="#">Feminino</a></li>
+            <li><a href="#">Masculino</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">Lookbook</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h4 class="boe-footer-title">AJUDA</h4>
+          <ul class="boe-footer-list">
+            <li><a href="#">Minha Conta</a></li>
+            <li><a href="#">Trocas e Devoluções</a></li>
+            <li><a href="#">Rastrear Pedido</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h4 class="boe-footer-title">EMPRESA</h4>
+          <ul class="boe-footer-list">
+            <li><a href="#">Sobre Nós</a></li>
+            <li><a href="#">Carreiras</a></li>
+            <li><a href="#">Imprensa</a></li>
+            <li><a href="#">Sustentabilidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="boe-footer-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <p class="mb-0">© 2026 Boemia. Todos os direitos reservados.</p>
+        <div class="d-flex gap-4">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL DE PRODUTO ============ -->
+  <div class="modal fade boe-modal" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="row g-0">
+          <div class="col-md-6 boe-modal-img-wrap">
+            <img id="modalImg" src="" alt="" class="boe-modal-img">
+            <span id="modalTag" class="boe-tag boe-modal-tag"></span>
+          </div>
+          <div class="col-md-6">
+            <div class="modal-body p-4">
+              <button type="button" class="btn-close btn-close-white float-end" data-bs-dismiss="modal" aria-label="Fechar"></button>
+              <h2 id="modalName" class="boe-modal-title"></h2>
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span id="modalPrice" class="boe-modal-price"></span>
+                <span id="modalOriginalPrice" class="boe-modal-original-price"></span>
+              </div>
+              <p id="modalDesc" class="boe-modal-desc"></p>
+
+              <div class="mb-3">
+                <p class="boe-modal-label">TAMANHO</p>
+                <div id="modalSizes" class="d-flex flex-wrap gap-2"></div>
+              </div>
+
+              <div class="mb-4">
+                <p class="boe-modal-label">QUANTIDADE</p>
+                <div class="d-flex align-items-center">
+                  <button type="button" class="boe-qty-btn" id="qtyMinus">−</button>
+                  <span id="qtyValue" class="boe-qty-value">1</span>
+                  <button type="button" class="boe-qty-btn" id="qtyPlus">+</button>
+                </div>
+              </div>
+
+              <button type="button" class="btn boe-btn-primary w-100" id="addToCartBtn">ADICIONAR AO CARRINHO</button>
+
+              <div class="d-flex gap-3 mt-3">
+                <div class="boe-shipping-info"><i class="bi bi-truck"></i> Frete grátis acima de R$399</div>
+                <div class="boe-shipping-info"><i class="bi bi-arrow-counterclockwise"></i> Troca grátis em 30 dias</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index:1080;">
+    <div id="boeToast" class="toast boe-toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body" id="toastBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ BACK TO TOP ============ -->
+  <button id="backToTop" class="boe-back-to-top" aria-label="Voltar ao topo">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
