@@ -1,0 +1,4 @@
+venv/
+flask.log
+*.pem
+__pycache__/
