@@ -356,6 +356,26 @@ if (signupForm) {
   });
 }
 
+// ---------- Menu mobile (offcanvas) ----------
+// Links que levam a outra página NÃO usam data-bs-dismiss: o Bootstrap bloqueia
+// a navegação de <a> com esse atributo. Só fechamos o menu quando o link aponta
+// para a própria página (ex.: NOVIDADES na Home).
+const mobileMenuEl = $('mobileMenu');
+if (mobileMenuEl) {
+  const mobileMenu = bootstrap.Offcanvas.getOrCreateInstance(mobileMenuEl);
+  mobileMenuEl.querySelectorAll('.boe-mobile-link:not([data-bs-dismiss])').forEach(link => {
+    link.addEventListener('click', e => {
+      const url = new URL(link.href, location.href);
+      if (url.pathname !== location.pathname || !url.hash) return; // outra página: navega normal
+      e.preventDefault();
+      mobileMenuEl.addEventListener('hidden.bs.offcanvas', () => {
+        document.querySelector(url.hash)?.scrollIntoView({ behavior: 'smooth' });
+      }, { once: true });
+      mobileMenu.hide();
+    });
+  });
+}
+
 // ---------- Back to top ----------
 const backToTopBtn = $('backToTop');
 if (backToTopBtn) {
