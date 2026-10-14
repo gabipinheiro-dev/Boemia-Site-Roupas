@@ -407,3 +407,59 @@ a { text-decoration: none; }
   .boe-scroll-cue { display: none; }
   .boe-hero-indicators { bottom: 16px; }
 }
+
+/* ==========================================================
+   MULTI-PÁGINAS — acréscimos (navbar ativa, cabeçalho de página, formulário)
+   ========================================================== */
+
+/* Link ativo da navbar */
+.boe-nav-link.active { color: var(--boe-white) !important; }
+.boe-nav-link.active::after { width: 100%; }
+.boe-nav-sale.active { color: var(--boe-purple) !important; }
+
+/* Cabeçalho das páginas internas */
+.boe-page-sub { color: var(--boe-muted); line-height: 1.6; max-width: 560px; margin: 12px 0 0; }
+.boe-page-sub.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Estado vazio dos filtros */
+.boe-empty { color: var(--boe-muted); text-align: center; padding: 48px 0; letter-spacing: 0.05em; }
+
+/* ---------- Formulário de cadastro ---------- */
+.boe-form-card {
+  background: var(--boe-dark);
+  border: 1px solid var(--boe-border);
+  padding: clamp(24px, 4vw, 40px);
+}
+.boe-form-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--boe-muted);
+  margin-bottom: 6px;
+}
+.boe-form-control {
+  background-color: var(--boe-black);
+  border: 1px solid var(--boe-border);
+  color: var(--boe-white);
+  padding: 14px 16px;
+  font-size: 0.875rem;
+  border-radius: 0;
+  color-scheme: dark;
+}
+.boe-form-control::placeholder { color: #555; }
+.boe-form-control:focus {
+  background-color: var(--boe-black);
+  color: var(--boe-white);
+  border-color: var(--boe-purple);
+  box-shadow: none;
+}
+.boe-form-check .form-check-input {
+  background-color: var(--boe-black);
+  border: 1px solid var(--boe-border);
+  border-radius: 0;
+}
+.boe-form-check .form-check-input:checked { background-color: var(--boe-purple); border-color: var(--boe-purple); }
+.boe-form-check .form-check-input:focus { border-color: var(--boe-purple); box-shadow: 0 0 0 .2rem rgba(139,61,255,.25); }
+.boe-form-check .form-check-label { color: var(--boe-muted); font-size: 0.85rem; }
+.boe-form-check a { color: var(--boe-purple-light); }

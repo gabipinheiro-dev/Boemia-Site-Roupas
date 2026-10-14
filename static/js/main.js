@@ -1,8 +1,12 @@
 /* ==========================================================
    BOEMIA — script principal (JavaScript puro)
+   Compartilhado por todas as páginas (index, feminino, masculino, cadastro).
+   Cada bloco só roda se os elementos existirem na página atual.
    ========================================================== */
 
 // ---------- Dados ----------
+// gender: 'feminino' | 'masculino' | ['feminino', 'masculino'] p/ unissex (define em qual catálogo a peça aparece;
+// a Home mostra todas as peças)
 const PRODUCTS = [
   {
     id: 1,
@@ -14,6 +18,7 @@ const PRODUCTS = [
     img: '/static/imagens/foto_moca_camiseta.png',
     sizes: ['P', 'M', 'G', 'GG'],
     category: 'tops',
+    gender: 'feminino',
     desc: 'Camiseta oversized em algodão premium 320g. Corte amplo e caído, gola careca reforçada.',
   },
   {
@@ -26,6 +31,7 @@ const PRODUCTS = [
     img: 'https://images.unsplash.com/photo-1786052902193-98a5278b2602?q=80&w=701&auto=format',
     sizes: ['P', 'M', 'G'],
     category: 'jaquetas',
+    gender: 'masculino',
     desc: 'Jaqueta tática em ripstop com camuflagem urbana. Detalhes refletivos e bolsos funcionais.',
   },
   {
@@ -38,7 +44,8 @@ const PRODUCTS = [
     img: 'https://images.unsplash.com/photo-1763044938182-ed2526ae803a?w=600&h=750&fit=crop&auto=format',
     sizes: ['36', '38', '40', '42'],
     category: 'calças',
-    desc: 'Calça cargo com múltiplos bolsos laterais. Elástico na cintura e barra ajustável.',
+    gender: ['feminino', 'masculino'], // unissex: aparece nos dois catálogos
+    desc: 'Unissex. Calça cargo com múltiplos bolsos laterais. Elástico na cintura e barra ajustável.',
   },
   {
     id: 4,
@@ -50,6 +57,7 @@ const PRODUCTS = [
     img: 'https://images.unsplash.com/photo-1770192988911-39f344a10dfe?q=80&w=687&auto=format',
     sizes: ['P', 'M', 'G', 'GG'],
     category: 'tops',
+    gender: 'feminino',
     desc: 'Jaqueta de couro legítimo com patchs bordados. Capuz duplo e cordão encerado.',
   },
   {
@@ -62,6 +70,7 @@ const PRODUCTS = [
     img: 'https://images.unsplash.com/photo-1711403194371-c914bd7fd26d?q=80&w=687&auto=format',
     sizes: ['P', 'M', 'G'],
     category: 'acessórios',
+    gender: 'masculino',
     desc: 'Top em malha mesh com acabamento irregular nas bordas. Fit ajustado.',
   },
   {
@@ -74,6 +83,7 @@ const PRODUCTS = [
     img: 'https://images.unsplash.com/photo-1509847950535-14e861e5191b?q=80&w=692&auto=format',
     sizes: ['P', 'M', 'G', 'GG'],
     category: 'jaquetas',
+    gender: 'masculino',
     desc: 'Bomber impermeável com forro em fleece removível. Patch bordado exclusivo.',
   },
 ]
@@ -91,25 +101,41 @@ const REVIEWS = [
 ]
 
 // ---------- Estado ----------
+// <body data-gender="feminino|masculino"> restringe o catálogo da página
+const PAGE_GENDER = document.body.dataset.gender || null;
+const CART_KEY = 'boemia_cart';
+
 let activeFilter = 'todos';
-let cartCount = 0;
+let cartCount = loadCart();
 let currentProduct = null;
 let selectedSize = '';
 let qty = 1;
 
+const $ = id => document.getElementById(id);
+
+// O carrinho é guardado no navegador para não zerar ao trocar de página
+function loadCart() {
+  try { return Number(localStorage.getItem(CART_KEY)) || 0; } catch { return 0; }
+}
+function saveCart() {
+  try { localStorage.setItem(CART_KEY, String(cartCount)); } catch { /* ignora */ }
+}
+
 // ---------- Toast (Bootstrap) ----------
-const toastEl = document.getElementById('boeToast');
-const toastBody = document.getElementById('toastBody');
-const boeToast = new bootstrap.Toast(toastEl, { delay: 2800 });
+const toastEl = $('boeToast');
+const toastBody = $('toastBody');
+const boeToast = toastEl ? new bootstrap.Toast(toastEl, { delay: 2800 }) : null;
 
 function showToast(msg) {
+  if (!boeToast) return;
   toastBody.textContent = msg;
   boeToast.show();
 }
 
-// ---------- Renderizar categorias ----------
+// ---------- Renderizar categorias (Home) ----------
 function renderCategories() {
-  const grid = document.getElementById('categoriesGrid');
+  const grid = $('categoriesGrid');
+  if (!grid) return;
   grid.innerHTML = CATEGORIES.map(c => `
     <div class="col-12 col-md-4">
       <a href="#produtos" class="boe-category-card" data-filter-link="${c.filter}">
@@ -127,8 +153,16 @@ function renderCategories() {
 
 // ---------- Renderizar produtos ----------
 function renderProducts() {
-  const grid = document.getElementById('productsGrid');
-  const list = activeFilter === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+  const grid = $('productsGrid');
+  if (!grid) return;
+
+  let list = PAGE_GENDER ? PRODUCTS.filter(p => [].concat(p.gender).includes(PAGE_GENDER)) : PRODUCTS;
+  if (activeFilter !== 'todos') list = list.filter(p => p.category === activeFilter);
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="col-12"><p class="boe-empty">NENHUMA PEÇA NESTA CATEGORIA POR ENQUANTO.</p></div>';
+    return;
+  }
 
   grid.innerHTML = list.map(p => `
     <div class="col-6 col-md-4">
@@ -159,9 +193,10 @@ function renderProducts() {
   });
 }
 
-// ---------- Renderizar reviews ----------
+// ---------- Renderizar reviews (Home) ----------
 function renderReviews() {
-  const grid = document.getElementById('reviewsGrid');
+  const grid = $('reviewsGrid');
+  if (!grid) return;
   grid.innerHTML = REVIEWS.map(r => `
     <div class="col-12 col-md-4">
       <div class="boe-review-card">
@@ -177,6 +212,8 @@ function renderReviews() {
 }
 
 // ---------- Filtro de produtos ----------
+const filterGroup = $('filterGroup');
+
 function setFilter(filter) {
   activeFilter = filter;
   document.querySelectorAll('.boe-filter-btn').forEach(btn => {
@@ -185,42 +222,45 @@ function setFilter(filter) {
   renderProducts();
 }
 
-document.getElementById('filterGroup').addEventListener('click', e => {
-  const btn = e.target.closest('.boe-filter-btn');
-  if (!btn) return;
-  setFilter(btn.dataset.filter);
-});
+if (filterGroup) {
+  filterGroup.addEventListener('click', e => {
+    const btn = e.target.closest('.boe-filter-btn');
+    if (!btn) return;
+    setFilter(btn.dataset.filter);
+  });
+}
 
-// Links do menu/hero/categorias que também aplicam filtro
+// Links do hero/categorias que também aplicam filtro
 document.addEventListener('click', e => {
   const link = e.target.closest('[data-filter-link]');
-  if (!link) return;
+  if (!link || !filterGroup) return;
   setFilter(link.dataset.filterLink);
 });
 
 // ---------- Modal de produto ----------
-const productModalEl = document.getElementById('productModal');
-const productModal = new bootstrap.Modal(productModalEl);
+const productModalEl = $('productModal');
+const productModal = productModalEl ? new bootstrap.Modal(productModalEl) : null;
 
 function openModal(product) {
+  if (!productModal) return;
   currentProduct = product;
   selectedSize = '';
   qty = 1;
 
-  document.getElementById('modalImg').src = product.img;
-  document.getElementById('modalImg').alt = product.name;
-  document.getElementById('modalTag').textContent = product.tag;
-  document.getElementById('modalTag').style.background = 'rgba(139,61,255,0.2)';
-  document.getElementById('modalTag').style.color = '#a855f7';
-  document.getElementById('modalTag').style.border = '1px solid rgba(139,61,255,0.3)';
+  $('modalImg').src = product.img;
+  $('modalImg').alt = product.name;
+  $('modalTag').textContent = product.tag;
+  $('modalTag').style.background = 'rgba(139,61,255,0.2)';
+  $('modalTag').style.color = '#a855f7';
+  $('modalTag').style.border = '1px solid rgba(139,61,255,0.3)';
 
-  document.getElementById('modalName').textContent = product.name;
-  document.getElementById('modalPrice').textContent = product.price;
-  document.getElementById('modalOriginalPrice').textContent = product.originalPrice || '';
-  document.getElementById('modalDesc').textContent = product.desc;
-  document.getElementById('qtyValue').textContent = '1';
+  $('modalName').textContent = product.name;
+  $('modalPrice').textContent = product.price;
+  $('modalOriginalPrice').textContent = product.originalPrice || '';
+  $('modalDesc').textContent = product.desc;
+  $('qtyValue').textContent = '1';
 
-  const sizesWrap = document.getElementById('modalSizes');
+  const sizesWrap = $('modalSizes');
   sizesWrap.innerHTML = product.sizes.map(s => `<button type="button" class="boe-size-btn" data-size="${s}">${s}</button>`).join('');
   sizesWrap.querySelectorAll('.boe-size-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -233,63 +273,102 @@ function openModal(product) {
   productModal.show();
 }
 
-document.getElementById('qtyMinus').addEventListener('click', () => {
-  qty = Math.max(1, qty - 1);
-  document.getElementById('qtyValue').textContent = qty;
-});
-document.getElementById('qtyPlus').addEventListener('click', () => {
-  qty += 1;
-  document.getElementById('qtyValue').textContent = qty;
-});
+if (productModal) {
+  $('qtyMinus').addEventListener('click', () => {
+    qty = Math.max(1, qty - 1);
+    $('qtyValue').textContent = qty;
+  });
+  $('qtyPlus').addEventListener('click', () => {
+    qty += 1;
+    $('qtyValue').textContent = qty;
+  });
 
-document.getElementById('addToCartBtn').addEventListener('click', () => {
-  if (!selectedSize) {
-    showToast('Selecione um tamanho!');
-    return;
-  }
-  cartCount += qty;
-  updateCartBadge();
-  productModal.hide();
-  showToast(`${currentProduct.name} adicionado ao carrinho ✓`);
-});
+  $('addToCartBtn').addEventListener('click', () => {
+    if (!selectedSize) {
+      showToast('Selecione um tamanho!');
+      return;
+    }
+    cartCount += qty;
+    saveCart();
+    updateCartBadge();
+    productModal.hide();
+    showToast(`${currentProduct.name} adicionado ao carrinho ✓`);
+  });
+}
 
-// ---------- Carrinho / busca (ícones da navbar) ----------
+// ---------- Carrinho / busca (ícones da navbar — em todas as páginas) ----------
 function updateCartBadge() {
-  const badge = document.getElementById('cartBadge');
+  const badge = $('cartBadge');
+  if (!badge) return;
   badge.textContent = cartCount;
   badge.classList.toggle('d-none', cartCount === 0);
 }
 
-document.getElementById('btnCart').addEventListener('click', () => {
+$('btnCart')?.addEventListener('click', () => {
   showToast(`${cartCount} item(s) no carrinho`);
 });
-document.getElementById('btnSearch').addEventListener('click', () => {
+$('btnSearch')?.addEventListener('click', () => {
   showToast('Busca em breve...');
 });
 document.querySelectorAll('.boe-social-btn').forEach(btn => {
   btn.addEventListener('click', () => showToast(`${btn.dataset.social} em breve!`));
 });
 
-// ---------- Newsletter ----------
-document.getElementById('newsletterForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const email = document.getElementById('newsletterEmail').value;
-  if (!email) return;
-  document.getElementById('newsletterForm').classList.add('d-none');
-  document.getElementById('newsletterSuccess').classList.remove('d-none');
-  showToast('Inscrito com sucesso! ✓');
-});
+// ---------- Newsletter (Home) ----------
+const newsletterForm = $('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = $('newsletterEmail').value;
+    if (!email) return;
+    newsletterForm.classList.add('d-none');
+    $('newsletterSuccess').classList.remove('d-none');
+    showToast('Inscrito com sucesso! ✓');
+  });
+}
+
+// ---------- Cadastro de clientes (cadastro.html) ----------
+const signupForm = $('signupForm');
+if (signupForm) {
+  const senha = $('signupSenha');
+  const senha2 = $('signupSenha2');
+
+  // Confirmação de senha: marca o campo como inválido enquanto for diferente
+  const checkMatch = () => {
+    senha2.setCustomValidity(senha2.value !== senha.value ? 'As senhas não conferem' : '');
+  };
+  senha.addEventListener('input', checkMatch);
+  senha2.addEventListener('input', checkMatch);
+
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+    checkMatch();
+    if (!signupForm.checkValidity()) {
+      e.stopPropagation();
+      signupForm.classList.add('was-validated');
+      return;
+    }
+    // Sem back-end: apenas confirma o cadastro na tela (a senha não é armazenada)
+    signupForm.classList.add('d-none');
+    $('signupSuccess').classList.remove('d-none');
+    showToast('Cadastro realizado com sucesso! ✓');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // ---------- Back to top ----------
-const backToTopBtn = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  backToTopBtn.classList.toggle('show', window.scrollY > 400);
-});
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+const backToTopBtn = $('backToTop');
+if (backToTopBtn) {
+  window.addEventListener('scroll', () => {
+    backToTopBtn.classList.toggle('show', window.scrollY > 400);
+  });
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // ---------- Init ----------
 renderCategories();
 renderProducts();
 renderReviews();
+updateCartBadge();

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Masculino — BOEMIA{% endblock %}
+{% block gender %}masculino{% endblock %}
+{% block content %}
+  <!-- ============ CABEÇALHO DA PÁGINA ============ -->
+  <section class="container-xl px-3 boe-section pb-0">
+    <span class="boe-tag boe-tag-line">COLEÇÃO</span>
+    <h1 class="boe-h2">MASCULINO</h1>
+    <p class="boe-page-sub">Jaquetas, acessórios e básicos com a atitude da noite.</p>
+  </section>
+
+  <!-- ============ PRODUTOS ============ -->
+  <section id="produtos" class="container-xl px-3 boe-section">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+      <div>
+        <span class="boe-tag boe-tag-line">CATÁLOGO</span>
+        <h2 class="boe-h2 boe-h2-sm">PRODUTOS</h2>
+      </div>
+      <div class="btn-group flex-wrap" role="group" aria-label="Filtrar produtos" id="filterGroup">
+        <button type="button" class="btn boe-filter-btn active" data-filter="todos">TODOS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="croppeds">CROPPEDS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="jaquetas">JAQUETAS</button>
+        <button type="button" class="btn boe-filter-btn" data-filter="calças">CALÇAS</button>
+      </div>
+    </div>
+    <div class="row g-3" id="productsGrid"></div>
+  </section>
+{% endblock %}

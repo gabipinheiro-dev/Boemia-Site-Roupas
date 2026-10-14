@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}BOEMIA — Streetwear que vive depois da meia-noite{% endblock %}</title>
-  <meta name="description" content="BOEMIA — streetwear urbano noturno. Novidades, feminino, masculino e sale." />
+  <meta name="description" content="BOEMIA — streetwear urbano noturno. Novidades, feminino, masculino e cadastro." />
 
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,12 +18,13 @@
   <!-- Estilos próprios -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-<body>
+<body data-gender="{% block gender %}{% endblock %}">
 
+  {% set ep = request.endpoint %}
   <!-- ============ NAVBAR ============ -->
   <nav class="navbar navbar-expand-lg fixed-top boe-navbar">
     <div class="container-xl px-3">
-      <a class="navbar-brand boe-logo" href="#">BOE<span>MIA</span></a>
+      <a class="navbar-brand boe-logo" href="{{ url_for('index') }}">BOE<span>MIA</span></a>
 
       <div class="d-flex align-items-center gap-3 order-lg-3">
         <button class="boe-icon-btn" id="btnSearch" aria-label="Buscar" data-bs-toggle="tooltip" title="Buscar">
@@ -41,10 +42,10 @@
       <!-- Nav desktop -->
       <div class="collapse navbar-collapse d-none d-lg-flex order-lg-2">
         <ul class="navbar-nav mx-auto gap-lg-5">
-          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">NOVIDADES</a></li>
-          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">FEMININO</a></li>
-          <li class="nav-item"><a class="nav-link boe-nav-link" href="#produtos" data-filter-link="todos">MASCULINO</a></li>
-          <li class="nav-item"><a class="nav-link boe-nav-link boe-nav-sale" href="#produtos" data-filter-link="todos">SALE</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link{% if ep == 'index' %} active{% endif %}" href="{{ url_for('index') }}#produtos"{% if ep == 'index' %} aria-current="page"{% endif %}>NOVIDADES</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link{% if ep == 'feminino' %} active{% endif %}" href="{{ url_for('feminino') }}"{% if ep == 'feminino' %} aria-current="page"{% endif %}>FEMININO</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link{% if ep == 'masculino' %} active{% endif %}" href="{{ url_for('masculino') }}"{% if ep == 'masculino' %} aria-current="page"{% endif %}>MASCULINO</a></li>
+          <li class="nav-item"><a class="nav-link boe-nav-link boe-nav-sale{% if ep == 'cadastro' %} active{% endif %}" href="{{ url_for('cadastro') }}"{% if ep == 'cadastro' %} aria-current="page"{% endif %}>CADASTRO</a></li>
         </ul>
       </div>
     </div>
@@ -57,10 +58,10 @@
     </div>
     <div class="offcanvas-body d-flex flex-column align-items-center justify-content-center text-center gap-4">
       <div class="boe-logo mb-2">BOE<span>MIA</span></div>
-      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">NOVIDADES</a>
-      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">FEMININO</a>
-      <a class="boe-mobile-link" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">MASCULINO</a>
-      <a class="boe-mobile-link boe-nav-sale" href="#produtos" data-bs-dismiss="offcanvas" data-filter-link="todos">SALE</a>
+      <a class="boe-mobile-link" href="{{ url_for('index') }}#produtos" data-bs-dismiss="offcanvas">NOVIDADES</a>
+      <a class="boe-mobile-link" href="{{ url_for('feminino') }}" data-bs-dismiss="offcanvas">FEMININO</a>
+      <a class="boe-mobile-link" href="{{ url_for('masculino') }}" data-bs-dismiss="offcanvas">MASCULINO</a>
+      <a class="boe-mobile-link boe-nav-sale" href="{{ url_for('cadastro') }}" data-bs-dismiss="offcanvas">CADASTRO</a>
       <a class="boe-mobile-link" href="#" data-bs-dismiss="offcanvas">SOBRE NÓS</a>
       <a class="boe-mobile-link" href="#" data-bs-dismiss="offcanvas">CONTATO</a>
       <div class="boe-mobile-handle mt-3">@boemia.store</div>
@@ -83,17 +84,17 @@
         <div class="col-6 col-md-3">
           <h4 class="boe-footer-title">LOJA</h4>
           <ul class="boe-footer-list">
-            <li><a href="#">Novidades</a></li>
-            <li><a href="#">Feminino</a></li>
-            <li><a href="#">Masculino</a></li>
-            <li><a href="#">Sale</a></li>
+            <li><a href="{{ url_for('index') }}#produtos">Novidades</a></li>
+            <li><a href="{{ url_for('feminino') }}">Feminino</a></li>
+            <li><a href="{{ url_for('masculino') }}">Masculino</a></li>
+            <li><a href="{{ url_for('cadastro') }}">Cadastro</a></li>
             <li><a href="#">Lookbook</a></li>
           </ul>
         </div>
         <div class="col-6 col-md-3">
           <h4 class="boe-footer-title">AJUDA</h4>
           <ul class="boe-footer-list">
-            <li><a href="#">Minha Conta</a></li>
+            <li><a href="{{ url_for('cadastro') }}">Minha Conta</a></li>
             <li><a href="#">Trocas e Devoluções</a></li>
             <li><a href="#">Rastrear Pedido</a></li>
             <li><a href="#">FAQ</a></li>
